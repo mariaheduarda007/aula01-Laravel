@@ -29,4 +29,15 @@ class CursoController extends Controller
         return redirect()->route('curso.index');
     }
 
+    public function destroy(string $id)
+    {
+        $curso = Curso::find($id);
+        if (isset($curso)) {
+            $curso->delete();
+        }
+        return redirect('/curso');
+
+    }
+
+
 }
