@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Curso extends Model
+class Disciplina extends Model
 {
     use SoftDeletes; // uma função de uma classe do framework - otimiza o codigo
 
-    public function aluno(){
-        return $this->hasMany('\App\Models\Aluno');
-    }
-
-      public function disciplinas(){
-        return $this->hasMany('\App\Models\Disciplina');
+    public function curso(){
+        return $this->belongsTo('\App\Models\Curso');
     }
 }

@@ -29,6 +29,28 @@ class CursoController extends Controller
         return redirect()->route('curso.index');
     }
 
+     public function edit(string $id)
+    {
+        $curso = Curso::find($id);
+        if (isset($curso)) {
+            $cursos = Curso::all();
+            return view('curso.edit', compact(['curso', 'cursos']));
+        }
+        return redirect()->route('curso.index');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $curso = Curso::find($id);
+
+        if (isset($curso)) {
+            $curso->nome = mb_strtoupper($request->nome, 'UTF-8');
+            $curso->duracao = $request->duracao;
+            $curso->save();
+        }
+        return redirect()->route('curso.index');
+    }
+
     public function destroy(string $id)
     {
         $curso = Curso::find($id);
