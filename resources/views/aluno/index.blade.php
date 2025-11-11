@@ -4,6 +4,7 @@
         'cabecalho' => 'Lista de Alunos',
         'rota' => 'aluno.create',
         'relatorio' => 'report.aluno',
+        'class' => App\Models\Aluno::class,
     ]
 )
 @section('conteudo')

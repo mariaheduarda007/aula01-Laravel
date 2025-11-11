@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Aluno;
 use App\Models\Curso;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -12,20 +13,23 @@ class AlunoController extends Controller
 
     public function index()
     {
+        Gate::authorize('viewAny', Aluno::class);
         $alunos = Aluno::all();
-        // dd($alunos); 
+        // dd($alunos);
         return view('aluno.index', compact('alunos'));
     }
 
 
     public function create()
     {
+        Gate::authorize('create', Aluno::class);
         $cursos = Curso::all();
         return view('aluno.create', compact('cursos'));
     }
 
     public function store(Request $request)
     {
+        Gate::authorize('viewAny', Aluno::class);
         $curso = Curso::find($request->curso);
 
         if (isset($curso)) {
@@ -56,6 +60,7 @@ class AlunoController extends Controller
 
     public function edit(string $id)
     {
+        Gate::authorize('edit', Aluno::class);
         $aluno = Aluno::find($id);
         if (isset($aluno)) {
             $cursos = Curso::all();
@@ -68,6 +73,8 @@ class AlunoController extends Controller
 
     public function update(Request $request, string $id)
     {
+        Gate::authorize('edit', Aluno::class);
+
         $aluno = Aluno::find($id);
         $curso = Curso::find($request->curso);
 
@@ -91,6 +98,8 @@ class AlunoController extends Controller
 
     public function destroy(string $id)
     {
+        Gate::authorize('delete', Aluno::class);
+
         $aluno = Aluno::find($id);
         if (isset($aluno)) {
             $aluno->delete();
@@ -107,7 +116,6 @@ class AlunoController extends Controller
 
         // Exibe o PDF no navegador
         return $pdf->stream('document.pdf');
-        // Ou Faz o download do PDF
-// return $pdf->download('document.pdf');
+
     }
 }
